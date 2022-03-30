@@ -13,14 +13,14 @@ module.exports = {
 	runtimeCaching: [{
 		// Match any request that ends with .png, .jpg, .jpeg or .svg.
 		urlPattern: '/\.(?:png|jpg|jpeg|svg)$/',
-	
+
 		// Apply a cache-first strategy.
-		handler: 'CacheFirst',
-	
+		handler: 'NetworkFirst',
+
 		options: {
 		  // Use a custom cache name.
 		  cacheName: 'shopCache',
-	
+
 		  expiration: {
 			maxEntries: 100,
 		  },

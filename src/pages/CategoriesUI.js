@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import "../style/Categories.css";
 
 export default function CategoriesUI() {
     const [categories, setCategories] = useState([])
@@ -32,11 +33,11 @@ export default function CategoriesUI() {
             <div>
                 {categories.map(c => {
                     if (c._links.subcategories !== undefined) {
-                        return <div key={c.categoryId} onClick={() => navigateToSub(c.categoryId)}>
+                        return <div className={"menuItem"} key={c.categoryId} onClick={() => navigateToSub(c.categoryId)}>
                             {c.name}
                         </div>
                     } else {
-                        return <div key={c.categoryId} onClick={() => navigateToArticleList(c._links.articles.href)}>
+                        return <div className={"menuItem"} key={c.categoryId} onClick={() => navigateToArticleList(c._links.articles.href)}>
                             {c.name}
                         </div>
                     }

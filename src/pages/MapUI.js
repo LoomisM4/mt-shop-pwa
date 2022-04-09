@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import {MapContainer, TileLayer, Marker, CircleMarker} from 'react-leaflet';
 
 export default function MapUI() {
-    const [errorText, setErrorText] = useState("")
+    const [errorText, setErrorText] = useState("Laden...")
+    const [positionLoaded, setPositionLoaded] = useState(false)
+    const [lat, setLat] = useState()
+    const [long, setLong] = useState()
 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -11,19 +15,26 @@ export default function MapUI() {
         }
     }, [])
 
-    if (errorText != null && errorText.length > 0) {
+    if (!positionLoaded) {
         return <div>{errorText}</div>
     } else {
         return (
-            <div>
-                TODO Karte
+            <div className={"map"}>
+                <MapContainer center={[lat, long]} zoom={17} style={{height: "100%", width: "100%"}}>
+                    <TileLayer
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <CircleMarker center={[lat, long]}/>
+                    <Marker position={[lat + 0.002, long - 0.003]}/>
+                </MapContainer>
             </div>
         )
     }
 
     function locationReceived(location) {
-        console.log(location.coords.latitude)
-        console.log(location.coords.longitude)
+        setLat(location.coords.latitude)
+        setLong(location.coords.longitude)
+        setPositionLoaded(true)
     }
 
     function errorGettingLocation(error) {

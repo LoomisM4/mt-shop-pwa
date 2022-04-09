@@ -76,30 +76,25 @@ self.addEventListener('message', (event) => {
 
 // Any other custom service worker logic can go here.
 self.addEventListener('fetch', function(event) {
-  console.log("fetch detected for:", event.request.url);
-
   event.respondWith(
     caches.open(cacheName).then(cache => {
-      return cache.match(event.request).then(response => {
-        if (response) {
-          console.log("serving from cache");
-
-          return response;
-        }
-        console.log(' No response for %s found in cache. About to fetch ' +
-          'from network...', event.request.url);
         return fetch(event.request.clone()).then(response => {
-          if (response.status < 400) {
-            cache.put(event.request, response.clone());
-          }
+            if (response.status < 400) {
+                cache.put(event.request, response.clone());
+                return response;
+            } else {
+                return cache.match(event.request).then(response => {
+                    if (response) {
+                        console.log("serving from cache");
 
-          return response;
+                        return response;
+                    }
+                }).catch(error => {throw error})
+            }
         }).catch(error => {throw error})
-      }).catch(error => {throw error})
     }).catch(error => {
-      console.error("Error occurred", error);
-
-      throw error;
+        console.error("Error occurred", error);
+        throw error;
     })
-  );
+  )
 });

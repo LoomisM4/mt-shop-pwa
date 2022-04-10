@@ -1,3 +1,11 @@
+.cartDiv {
+    font-size: 2em;
+}
+
+.cartDiv button {
+    font-size: xx-large;
+}
+
 .cartItem {
     display: grid;
     grid-template-columns: auto auto auto;

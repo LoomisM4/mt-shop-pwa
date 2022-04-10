@@ -11,7 +11,7 @@ export default function CartUI() {
 
     if (articles.length > 0) {
         return (
-            <div>
+            <div className={"cartDiv"}>
                 {articles.map(cartArticle => (
                     <div className={"cartItem"} key={cartArticle.article.articleId}>
                         <div>{cartArticle.article.name}</div>

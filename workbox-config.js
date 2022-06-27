@@ -15,11 +15,11 @@ module.exports = {
 		urlPattern: '/\.(?:png|jpg|jpeg|svg)$/',
 
 		// Apply a cache-first strategy.
-		handler: 'NetworkFirst',
+		handler: 'NetworkFirst', // 1
 
 		options: {
 		  // Use a custom cache name.
-		  cacheName: 'shopCache',
+		  cacheName: 'shopCache', // 1
 
 		  expiration: {
 			maxEntries: 100,
@@ -27,3 +27,5 @@ module.exports = {
 		},
 	  }],
 };
+
+// 2

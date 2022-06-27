@@ -1,0 +1,31 @@
+mt-shop-pwa                                                 615
+    public/                                         12
+        index.html                          10
+        manifest.json                       2
+    src/
+        comp/                                       42
+            Footer.js                       35
+            Header.js                       7
+        objects/                                    82
+            Cart.js                         82
+        pages/                                      314
+            ArticleList.js                  40
+            ArticleUI.js                    41
+            CartUI.js                       66
+            CategoriesUI.js                 66
+            MapUI.js                        63
+            SpotlightUI.js                  38
+        style/                                      74
+            ArticleList.css                 3
+            Cart.css                        16
+            Categories.css                  4
+            Details.css                     18
+            Footer.css                      13
+            Header.css                      18
+            Spotlight.css                   2
+        App.css                                     9
+        App.js                                      39
+        index.css                                   3
+        index.js                                    1
+        service-worker.js                           37
+    workbox-config.js                               2

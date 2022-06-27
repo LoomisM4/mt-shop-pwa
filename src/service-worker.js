@@ -13,7 +13,7 @@ import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
-const cacheName = 'shopCache'
+const cacheName = 'shopCache' // 1
 
 clientsClaim();
 
@@ -53,11 +53,11 @@ registerRoute(
 registerRoute(
   // Add in any other file extensions or routing criteria as needed.
   ({ url }) => url.origin === self.location.origin &&
-      url.pathname.endsWith('.png') &&
-      url.pathname.endsWith('.jpg') &&
-      url.pathname.endsWith('.js'), // Customize this strategy as needed, e.g., by changing to CacheFirst.
+      url.pathname.endsWith('.png') && // 1 (nur die Verknüpfung)
+      url.pathname.endsWith('.jpg') && // 3
+      url.pathname.endsWith('.js'), // 2
   new StaleWhileRevalidate({
-    cacheName: cacheName ,
+    cacheName: cacheName , // 1
     plugins: [
       // Ensure that once this runtime cache reaches a maximum size the
       // least-recently used images are removed.
@@ -75,26 +75,28 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
-self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    caches.open(cacheName).then(cache => {
-        return fetch(event.request.clone()).then(response => {
-            if (response.status < 400) {
-                cache.put(event.request, response.clone());
-                return response;
-            } else {
-                return cache.match(event.request).then(response => {
-                    if (response) {
+self.addEventListener('fetch', function(event) { // 1
+  event.respondWith( // 1
+    caches.open(cacheName).then(cache => { // 2
+        return fetch(event.request.clone()).then(response => { // 5
+            if (response.status < 400) { // 3
+                cache.put(event.request, response.clone()); // 3
+                return response; // 1
+            } else { // 1
+                return cache.match(event.request).then(response => { // 4
+                    if (response) { // 1
                         console.log("serving from cache");
 
-                        return response;
+                        return response; // 1
                     }
-                }).catch(error => {throw error})
+                }).catch(error => {throw error}) // 2
             }
-        }).catch(error => {throw error})
-    }).catch(error => {
+        }).catch(error => {throw error}) // 2
+    }).catch(error => { // 1
         console.error("Error occurred", error);
-        throw error;
+        throw error; // 1
     })
   )
 });
+
+// 37
